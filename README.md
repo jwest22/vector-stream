@@ -4,10 +4,10 @@ This repository provides a script to generate multi-modal vector embeddings for 
 ## Multi-Modal Vector Embeddings and Similarity Search
 
 ### Embedding Details
-Description: 768 dimensions using BERT
-Location: 768 dimensions using BERT
-Timestamp: 128 dimensions using a linear layer
-Total Dimensionality: 1664 dimensions
+* **Description:** 768 dimensions using BERT
+* **Location:** 768 dimensions using BERT
+* **Timestamp:** 128 dimensions using a linear layer
+* **Total Dimensionality:** 1664 dimensions
 These embeddings are combined and can be transformed into a shared latent space.
 
 ### Multi-Modal Embedding Approach
