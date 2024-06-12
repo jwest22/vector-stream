@@ -12,25 +12,25 @@ These embeddings are combined and can be transformed into a shared latent space.
 
 ### Multi-Modal Embedding Approach
 **Pros:**
-Granular Control: Detailed analysis of each component.
-Integrated Context: Learns dependencies between different data types.
-Flexibility: Queries can target any subset of modalities.
+* **Granular Control:** Detailed analysis of each component.
+* **Integrated Context:** Learns dependencies between different data types.
+* **Flexibility:** Queries can target any subset of modalities.
 
 **Cons:**
-Complex Training: Needs careful design and tuning.
-Increased Model Complexity: Requires sophisticated architecture.
+* **Complex Training:** Needs careful design and tuning.
+* **Increased Model Complexity:** Requires sophisticated architecture.
 
 ### Traditional Single Index Approach
 Combines all values into a single text field before embedding generation.
 
 **Pros:**
-Simplicity: Easier to implement with a single model.
-Unified Context: Embedding captures integrated context.
+* **Simplicity:** Easier to implement with a single model.
+* **Unified Context:** Embedding captures integrated context.
 
 **Cons:**
-Loss of Specificity: Less distinct representation of data types.
-Potential for Overload: Concatenated input may reduce learning effectiveness.
-Flexibility Limitations: Less flexible for independent queries.
+* **Loss of Specificity:** Less distinct representation of data types.
+* **Potential for Overload:** Concatenated input may reduce learning effectiveness.
+* **Flexibility Limitations:** Less flexible for independent queries.
 
 ## Table of Contents
 - [Requirements](#requirements)
