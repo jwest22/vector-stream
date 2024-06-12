@@ -19,7 +19,7 @@ class TextEmbedding(nn.Module):
         outputs = self.bert(**inputs)
         return outputs.last_hidden_state[:, 0, :]  # CLS token
 
-# Geolocation (text) Embedding Model
+# Geolocation Embedding Model (using text)
 class GeoEmbedding(nn.Module):
     def __init__(self):
         super(GeoEmbedding, self).__init__()
@@ -69,10 +69,16 @@ text_embeddings_np = np.vstack(text_embeddings)
 geo_embeddings_np = np.vstack(geo_embeddings)
 time_embeddings_np = np.vstack(time_embeddings)
 
+# Initialize FAISS indices
 geo_dimension = geo_embeddings_np.shape[1]
-geo_index = faiss.IndexFlatL2(geo_dimension)
+time_dimension = time_embeddings_np.shape[1]
 
+geo_index = faiss.IndexFlatL2(geo_dimension)
+time_index = faiss.IndexFlatL2(time_dimension)
+
+# Add embeddings to the indices
 geo_index.add(geo_embeddings_np)
+time_index.add(time_embeddings_np)
 
 # Generate embeddings for location query
 query_geo_text = ["New York City"]
@@ -85,4 +91,17 @@ D_geo, I_geo = geo_index.search(query_geo_embedding_np, k=len(events))
 # Print all events in New York City & their distances
 print("Events in New York City:")
 for distance, idx in zip(D_geo[0], I_geo[0]):
+    print(f"Distance: {distance}, Event: {events[idx]}")
+    
+# Generate a query embedding for a specific timestamp
+query_time = torch.tensor([[1625184000]], dtype=torch.float32)  # Example timestamp for querying
+query_time_embedding = time_model(query_time)
+query_time_embedding_np = query_time_embedding.detach().numpy()
+
+# Perform the search on the time index
+D_time, I_time = time_index.search(query_time_embedding_np, k=len(events))
+
+# Print all events with similar timestamps and their distances
+print("Events with similar timestamps:")
+for distance, idx in zip(D_time[0], I_time[0]):
     print(f"Distance: {distance}, Event: {events[idx]}")
