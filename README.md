@@ -1,6 +1,11 @@
 # Vector Stream
 This repository provides a script to generate multi-modal vector embeddings for event descriptions, geolocation data, and timestamps. It uses PyTorch and Hugging Face Transformers, with FAISS for similarity searches.
 
+## Table of Contents
+- [Overview](#multi-modal-vector-embeddings-and-similarity-search)
+- [Requirements](#requirements)
+- [Examples](#examples)
+
 ## Multi-Modal Vector Embeddings and Similarity Search
 
 ### Embedding Details
@@ -31,10 +36,6 @@ Combines all values into a single text field before embedding generation.
 * **Loss of Specificity:** Less distinct representation of data types.
 * **Potential for Overload:** Concatenated input may reduce learning effectiveness.
 * **Flexibility Limitations:** Less flexible for independent queries.
-
-## Table of Contents
-- [Requirements](#requirements)
-- [Examples](#examples)
 
 ## Requirements
 - Python 3.7+
