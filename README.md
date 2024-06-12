@@ -19,3 +19,12 @@ You can install the required libraries using pip:
 ```bash
 pip install torch transformers faiss-cpu numpy
 ```
+
+## Example
+
+```
+Events in New York City:
+Distance: 0.0, Event: {'description': 'Event description 1', 'location': 'New York City', 'timestamp': 1625097600}
+Distance: 0.0, Event: {'description': 'Event description 3', 'location': 'New York City', 'timestamp': 1625270400}
+Distance: 17.02941131591797, Event: {'description': 'Event description 2', 'location': 'Los Angeles', 'timestamp': 1625184000}
+```
