@@ -1,4 +1,4 @@
-# Event Embedding and Search
+# Vector Stream - Event Embedding and Search
 
 This repository contains a script to generate multi-modal vector embeddings for event descriptions, geolocation data, and timestamps, and to perform similarity searches based on these embeddings using the FAISS library. The script is implemented using PyTorch and the Hugging Face Transformers library.
 
