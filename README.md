@@ -1,6 +1,8 @@
 # Vector Stream
 This project generates multi-modal vector embeddings for event descriptions, geolocation data, and timestamps which are then available to be queried by a user via a Streamlit interface. The application dynamically categorizes each token in the user's query for appropriate embedding. This project uses Streamlit as the front-end, PyTorch and Hugging Face Transformers, and FAISS for similarity searches.
 
+This approach effectively multiplies the dimensionality for each subject, object and predicate token without introducing a larger embedding model. 
+
 ## Table of Contents
 - [Overview](#multi-modal-vector-embeddings-and-similarity-search)
 - [Requirements](#requirements)
