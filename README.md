@@ -1,5 +1,5 @@
 # Vector Stream
-This repository provides a script to generate multi-modal vector embeddings for event descriptions, geolocation data, and timestamps. It uses PyTorch and Hugging Face Transformers, with FAISS for similarity searches.
+This project generates multi-modal vector embeddings for event descriptions, geolocation data, and timestamps which are then available to be queried by a user via a Streamlit interface. The application dynamically categorizes each token in the user's query for appropriate embedding. This project uses Streamlit as the front-end, PyTorch and Hugging Face Transformers, and FAISS for similarity searches.
 
 ## Table of Contents
 - [Overview](#multi-modal-vector-embeddings-and-similarity-search)
@@ -12,8 +12,8 @@ This repository provides a script to generate multi-modal vector embeddings for 
 * **Description:** 768 dimensions using BERT
 * **Location:** 768 dimensions using BERT
 * **Timestamp:** 128 dimensions using a linear layer
-* **Total Dimensionality:** 1664 dimensions
-These embeddings are combined and can be transformed into a shared latent space.
+* **Total Dimensionality before collapse to shared space:** 1664 dimensions
+* **Total Dimensionality after collapse to shared space:** 512 - arbitrarily selected
 
 ### Multi-Modal Embedding Approach
 **Pros:**
@@ -38,47 +38,20 @@ Combines all values into a single text field before embedding generation.
 * **Flexibility Limitations:** Less flexible for independent queries.
 
 ## Requirements
-- Python 3.7+
-- PyTorch
-- transformers
-- faiss
+- streamlit
+- torch
+- faiss-cpu
 - numpy
+- pandas
+- transformers
+- sentence-transformers
 
 You can install the required libraries using pip:
 ```bash
-pip install torch transformers faiss-cpu numpy
+pip install requirements.txt
 ```
 
 ## Examples
 
-**Location Search:**
-```
-Events in New York City:
-Distance: 0.0, Event: {'description': 'Event description 1', 'location': 'New York City', 'timestamp': 1625097600}
-Distance: 0.0, Event: {'description': 'Event description 3', 'location': 'New York City', 'timestamp': 1625270400}
-Distance: 17.02941131591797, Event: {'description': 'Event description 2', 'location': 'Los Angeles', 'timestamp': 1625184000}
-```
-
-**Timestamp search**
-```
-Events with similar timestamps (1625184000):
-Distance: 0.0, Event: {'description': 'Event description 2', 'location': 'Los Angeles', 'timestamp': 1625184000}
-Distance: 350012702720.0, Event: {'description': 'Event description 1', 'location': 'New York City', 'timestamp': 1625097600}
-Distance: 350153441280.0, Event: {'description': 'Event description 3', 'location': 'New York City', 'timestamp': 1625270400}
-```
-
-**Description search**
-```
-Events with similar description ('Event description 1'):
-Distance: 0.0, Event: {'description': 'Event description 1', 'location': 'New York City', 'timestamp': 1625097600}
-Distance: 4.750166893005371, Event: {'description': 'Event description 2', 'location': 'Los Angeles', 'timestamp': 1625184000}
-Distance: 7.550570487976074, Event: {'description': 'Event description 3', 'location': 'New York City', 'timestamp': 1625270400}
-```
-
 **Multi-modal combined index search**
-```
-Combined query results ('New York City', 1625184000, 'Event Description 1'):
-Distance: 0.0, Event: {'description': 'Event description 1', 'location': 'New York City', 'timestamp': 1625097600}
-Distance: 29795794944.0, Event: {'description': 'Event description 2', 'location': 'Los Angeles', 'timestamp': 1625184000}
-Distance: 119198662656.0, Event: {'description': 'Event description 3', 'location': 'New York City', 'timestamp': 1625270400}
-```
+![Streamlit Vector Search Demo](demo-streamlit-output.png)

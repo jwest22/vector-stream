@@ -1,7 +1,8 @@
 import torch
 import torch.nn as nn
 from transformers import BertModel, BertTokenizer
-
+from sentence_transformers import SentenceTransformer
+import numpy as np
 class TextEmbedding(nn.Module):
     def __init__(self):
         super(TextEmbedding, self).__init__()
@@ -47,3 +48,22 @@ class MultiModalEmbedding(nn.Module):
         time_vec = self.time_embed(timestamps)
         combined = torch.cat((text_vec, geo_vec, time_vec), dim=1)
         return self.fc(combined)
+class SemanticClassifier:
+    def __init__(self, model_name='all-MiniLM-L6-v2'):
+        self.model = SentenceTransformer(model_name)
+        self.categories = ['event description', 'city', 'timestamp']
+        self.category_embeddings = self.model.encode(self.categories)
+
+    def classify(self, token):
+        # Timestamp placeholder
+        if token.isdigit():
+            if 1000000000 <= int(token) <= 2147483647:  # Unix timestamp range
+                return 2  # timestamp
+            else:
+                return 0  # Default to event description for other numeric tokens
+        token_embedding = self.model.encode([token])
+        similarities = np.dot(token_embedding, self.category_embeddings.T)
+        classification = np.argmax(similarities)
+        if classification == 1 and any(char.isdigit() for char in token):
+            return 0  # Prevent numeric tokens from being classified as location
+        return classification

@@ -1,21 +1,30 @@
-# main.py
-
+import streamlit as st
 import torch
 import faiss
 import numpy as np
 import os
-from models import MultiModalEmbedding
+import warnings
+from models import MultiModalEmbedding, SemanticClassifier
+import helpers
+import pandas as pd
+
+# Suppress specific FutureWarning from Hugging Face
+warnings.filterwarnings("ignore", category=FutureWarning, message=".*resume_download.*")
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
 
+# Initialize models
 model = MultiModalEmbedding()
+classifier = SemanticClassifier()
 
+# Sample events
 events = [
     {"description": "Event description 1", "location": "New York City", "timestamp": 1625097600},
     {"description": "Event description 2", "location": "Los Angeles", "timestamp": 1625184000},
     {"description": "Event description 3", "location": "New York City", "timestamp": 1625270400},
 ]
 
+# Embed events
 text_embeddings = []
 geo_embeddings = []
 time_embeddings = []
@@ -33,11 +42,13 @@ for event in events:
     time_embeddings.append(time_embedding.detach().numpy())
     combined_embeddings.append(combined_embedding.detach().numpy())
 
+# Convert to numpy arrays
 text_embeddings_np = np.vstack(text_embeddings)
 geo_embeddings_np = np.vstack(geo_embeddings)
 time_embeddings_np = np.vstack(time_embeddings)
 combined_embeddings_np = np.vstack(combined_embeddings)
 
+# Create FAISS indices
 text_dimension = text_embeddings_np.shape[1]
 geo_dimension = geo_embeddings_np.shape[1]
 time_dimension = time_embeddings_np.shape[1]
@@ -53,41 +64,40 @@ geo_index.add(geo_embeddings_np)
 time_index.add(time_embeddings_np)
 combined_index.add(combined_embeddings_np)
 
-query_geo_text = ["New York City"]
-query_geo_embedding = model.geo_embed(query_geo_text).detach().numpy()
-D_geo, I_geo = geo_index.search(query_geo_embedding, k=len(events))
+# Streamlit interface
+st.title("Vector Stream")
 
-print("Events in New York City:")
-for distance, idx in zip(D_geo[0], I_geo[0]):
-    print(f"Distance: {distance}, Event: {events[idx]}")
+user_query = st.text_input("Enter your query:", "Event description 1 New York City 1625097600")
 
-query_time = torch.tensor([[1625184000]], dtype=torch.float32)
-query_time_embedding = model.time_embed(query_time).detach().numpy()
-D_time, I_time = time_index.search(query_time_embedding, k=len(events))
+if st.button("Run Query"):
+    query_text, query_geo, query_time, token_classification = helpers.parse_and_classify_query(user_query)
 
-print("Events with similar timestamps:")
-for distance, idx in zip(D_time[0], I_time[0]):
-    print(f"Distance: {distance}, Event: {events[idx]}")
-
-query_text_description = ["Event description 1"]
-query_text_embedding = model.text_embed(query_text_description).detach().numpy()
-D_text, I_text = text_index.search(query_text_embedding, k=len(events))
-
-print("Events with similar descriptions:")
-for distance, idx in zip(D_text[0], I_text[0]):
-    print(f"Distance: {distance}, Event: {events[idx]}")
+    # Combine tokens by classification
+    classification_dict = {}
+    for token, classification in token_classification:
+        if classification not in classification_dict:
+            classification_dict[classification] = []
+        classification_dict[classification].append(token)
     
-query_text = ["Event description 1"]
-query_geo_text = ["New York City"]
-query_time = torch.tensor([[1625097600]], dtype=torch.float32)
+    combined_classification = {classification: " ".join(tokens) for classification, tokens in classification_dict.items()}
+    combined_classification_df = pd.DataFrame(list(combined_classification.items()), columns=["Classification", "Tokens"])
+    st.write("**Token Classification:**")
+    st.dataframe(combined_classification_df)
 
-query_text_embedding = model.text_embed(query_text)
-query_geo_embedding = model.geo_embed(query_geo_text)
-query_time_embedding = model.time_embed(query_time)
+    query_text_embedding = model.text_embed([query_text]) if query_text else torch.zeros((1, 768))
+    query_geo_embedding = model.geo_embed([query_geo]) if query_geo else torch.zeros((1, 768))
+    query_time_embedding = model.time_embed(torch.tensor([[int(query_time[0])]], dtype=torch.float32)) if query_time else torch.zeros((1, 128))
 
-combined_query_embedding = model.fc(torch.cat((query_text_embedding, query_geo_embedding, query_time_embedding), dim=1)).detach().numpy()
-D_combined, I_combined = combined_index.search(combined_query_embedding, k=len(events))
+    combined_query_embedding = model.fc(torch.cat((query_text_embedding, query_geo_embedding, query_time_embedding), dim=1)).detach().numpy()
+    D_combined, I_combined = combined_index.search(combined_query_embedding, k=len(events))
 
-print("Combined query results:")
-for distance, idx in zip(D_combined[0], I_combined[0]):
-    print(f"Distance: {distance}, Event: {events[idx]}")
+    results = []
+    for distance, idx in zip(D_combined[0], I_combined[0]):
+        event = events[idx]
+        event['distance'] = distance
+        event['timestamp'] = pd.to_datetime(event['timestamp'], unit='s')  # Convert to timestamp
+        results.append(event)
+    
+    results_df = pd.DataFrame(results)
+    st.write("**Combined Query Results:**")
+    st.dataframe(results_df)
