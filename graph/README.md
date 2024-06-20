@@ -4,7 +4,7 @@ This application generates a NetworkX graph object from relational data which is
 
 ## Salesforce Account and Opportunity Graph Analysis Example
 
-## Features
+### Features
 
 - Load and preprocess Salesforce account and opportunity data.
 - Create a graph of accounts with edges based on shared industry and date criteria.
@@ -19,7 +19,7 @@ A few key benefits from analyzing Salesforce account and opportunity data using 
   * Improved Targeting and Strategy: Clustering accounts using advanced graph and machine learning techniques enables more precise targeting, allowing sales teams to tailor their strategies for different clusters, improving overall sales efficiency and effectiveness.
   * Data-Driven Decision Making: The use of graph-based embeddings and clustering provides a robust foundation for data-driven decision making, helping sales managers prioritize high-potential accounts and optimize resource allocation.
 
-## Requirements
+### Requirements
 
 - Python 3.x
 - DuckDB
@@ -31,14 +31,14 @@ A few key benefits from analyzing Salesforce account and opportunity data using 
 - Scikit-learn
 - SentenceTransformers
 
-## Installation
+### Installation
 
 1. Install the required Python packages:
     ```sh
     pip install duckdb pandas networkx node2vec gensim matplotlib scikit-learn sentence-transformers
     ```
 
-## Usage
+### Usage
 
 1. Place your Salesforce account and opportunity CSV files in the `demo_data` directory, or use the already provided synthetic data. Ensure the file names match the script references. 
 
@@ -47,7 +47,7 @@ A few key benefits from analyzing Salesforce account and opportunity data using 
     python main.py
     ```
 
-## Explanation of Key Steps
+### Explanation of Key Steps
 
 1. **Load and Preprocess Data:**
     - Load account and opportunity data from CSV files.
