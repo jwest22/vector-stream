@@ -1,6 +1,6 @@
 # Transformer Based Graph Embedding for Node Clustering
 
-This application generates a NetworkX graph object from relational data which is used to generate embeddings for each record using Node2Vec, followed by clustering and visualization of the results. The application leverages DuckDB for efficient data processing and querying.
+This application generates a NetworkX graph object from relational data which is used to generate transformer embeddings for each record using Node2Vec, followed by clustering and visualization of the results. The application leverages DuckDB for efficient data processing and querying.
 
 ## Salesforce Account and Opportunity Graph Analysis Example
 
