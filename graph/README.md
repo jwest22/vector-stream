@@ -46,3 +46,7 @@ The t-SNE visualization below was generated from 100 records of synthetic Salesf
 - Groupings such as the cluster in the lower left suggest that the accounts might share similar values for other attributes like account_type, industry, country, opportunity_count, total_opportunity_amount, and avg_opportunity_probability.
 
 ![Alt text](t-SNE-visualization-example.png)
+
+Or for a less useful but more fun example of a 3D reduction visualization:
+
+![Alt text](t-SNE-visualization-example_3d.png)

@@ -2,7 +2,7 @@ from data_loader import load_data, setup_duckdb, fetch_data, aggregate_opportuni
 from graph_builder import create_graph, add_edges_by_industry, add_edges_by_won_status
 from feature_encoder import get_node_features, encode_features
 from node2vec_model import generate_node2vec_embeddings, load_node2vec_model, get_embeddings, perform_clustering
-from visualization import visualize_clusters
+from visualization import visualize_clusters, visualize_clusters_3d
 
 def main():
     # data_loader
@@ -28,6 +28,7 @@ def main():
 
     # visualization
     visualize_clusters(embeddings, G, labels_dict)
+    #visualize_clusters_3d(embeddings, G, labels_dict)
 
 if __name__ == "__main__":
     main()
