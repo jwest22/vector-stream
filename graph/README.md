@@ -42,7 +42,7 @@ Analyzing Salesforce account and opportunity data using this methodology provide
 
 The t-SNE visualization below was generated from 100 records of synthetic Salesforce account and opportunity data.
 
-- All accounts in this cluster had their most recent opportunities marked as won (recent_is_won = 1).
+- Yellow indicates if an account's most recent opportunity was won while purple is lost or not closed.
 - Groupings such as the cluster in the lower left suggest that the accounts might share similar values for other attributes like account_type, industry, country, opportunity_count, total_opportunity_amount, and avg_opportunity_probability.
 
 ![Alt text](t-SNE-visualization-example.png)
