@@ -1,4 +1,4 @@
-# Transformer Based Graph Embedding for Node Clustering
+# Transformer-Based Graph Embedding for Node Clustering
 
 This application generates a NetworkX graph object from relational data which is used to generate embeddings for each record using Node2Vec and Sentence-BERT, followed by clustering and visualization of the results. The application leverages DuckDB for efficient data processing and querying.
 
@@ -37,3 +37,12 @@ Analyzing Salesforce account and opportunity data using this methodology provide
     ```sh
     python main.py
     ```
+
+### Example
+
+The t-SNE visualization below was generated from 100 records of synthetic Salesforce account and opportunity data.
+
+- All accounts in this cluster had their most recent opportunities marked as won (recent_is_won = 1).
+- Groupings such as the cluster in the lower left suggest that the accounts might share similar values for other attributes like account_type, industry, country, opportunity_count, total_opportunity_amount, and avg_opportunity_probability.
+
+![Alt text](t-SNE-visualization-example.png)
