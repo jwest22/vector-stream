@@ -49,4 +49,4 @@ The t-SNE visualization below was generated from 100 records of synthetic Salesf
 
 Or for a less useful but more fun example of a 3D reduction visualization:
 
-![Alt text](t-SNE-visualization-example_3d.png)
+![Alt text](t-SNE-visualization-example-3d.png)
