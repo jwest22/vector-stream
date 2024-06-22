@@ -8,7 +8,7 @@ This application generates a NetworkX graph object from relational data, which i
 - Create a graph with customers and products as nodes.
 - Add edges for purchases, co-purchases, customer similarity, temporal relations, and semantic similarity between products.
 - Generate node embeddings using Node2Vec.
-- Cluster the nodes using K-Means clustering.
+- Cluster the nodes using K-Means clustering. https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans
 - Visualize the graph and clusters interactively using Plotly.
 
 ### Installation
@@ -30,6 +30,9 @@ This application generates a NetworkX graph object from relational data, which i
 ### Example
 
 The interactive visualization displays the graph with nodes representing customers and products, and edges representing various types of relationships. Nodes are colored based on their type (customers in blue, products in green), and clusters are highlighted to reveal patterns and insights.
+
+Michael Jackson might be interested in a power supply or an Instapot! 
+![Alt text](viz-example.png)
 
 ### Files and Functions
 
