@@ -1,20 +1,14 @@
-from data_loader import load_data, setup_duckdb, fetch_data, aggregate_opportunity_data
-from graph_builder import create_graph, add_edges_by_industry, add_edges_by_won_status
+from graph_builder import create_graph, load_data
 from feature_encoder import get_node_features, encode_features
 from node2vec_model import generate_node2vec_embeddings, load_node2vec_model, get_embeddings, perform_clustering
-from visualization import visualize_clusters, visualize_clusters_3d
+from analysis import visualize_interactive_graph
 
 def main():
     # data_loader
-    accounts_df, opportunities_df = load_data('demo_data/sfdc_account_100.csv', 'demo_data/sfdc_opportunity_100.csv')
-    con = setup_duckdb(accounts_df, opportunities_df)
-    result_df = fetch_data(con)
-    result_df = aggregate_opportunity_data(result_df)
+    customers_df, products_df, purchases_df, co_purchases_df = load_data('demo_data/customers.csv', 'demo_data/products.csv', 'demo_data/purchases.csv', 'demo_data/co_purchases.csv')
     
     # graph_builder
-    G, labels_dict = create_graph(result_df)
-    add_edges_by_industry(con, G)
-    add_edges_by_won_status(con, G)
+    G, labels_dict = create_graph(customers_df, products_df, purchases_df, co_purchases_df)
 
     # feature_encoder
     features = get_node_features(G)
@@ -25,10 +19,9 @@ def main():
     model = load_node2vec_model()
     embeddings = get_embeddings(model, G)
     perform_clustering(embeddings, G)
-
+    
     # visualization
-    visualize_clusters(embeddings, G, labels_dict)
-    #visualize_clusters_3d(embeddings, G, labels_dict)
+    visualize_interactive_graph(G, labels_dict)
 
 if __name__ == "__main__":
     main()

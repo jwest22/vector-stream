@@ -1,0 +1,50 @@
+product_id,product_name
+P_1,Laptop
+P_2,Smartphone
+P_3,Headphones
+P_4,Camera
+P_5,Smartwatch
+P_6,Tablet
+P_7,Monitor
+P_8,Keyboard
+P_9,Mouse
+P_10,Printer
+P_11,Speaker
+P_12,Router
+P_13,External Hard Drive
+P_14,USB Flash Drive
+P_15,Memory Card
+P_16,Webcam
+P_17,Microphone
+P_18,Projector
+P_19,Charger
+P_20,Power Bank
+P_21,Bluetooth Adapter
+P_22,Graphic Card
+P_23,Processor
+P_24,Motherboard
+P_25,RAM
+P_26,SSD
+P_27,HDD
+P_28,Cooling Fan
+P_29,Computer Case
+P_30,Power Supply
+P_31,Cable
+P_32,Adapter
+P_33,Smart Home Device
+P_34,Wearable Tech
+P_35,E-Reader
+P_36,VR Headset
+P_37,Gaming Console
+P_38,Game Controller
+P_39,Drone
+P_40,Action Camera
+P_41,Fitness Tracker
+P_42,Electric Toothbrush
+P_43,Hair Dryer
+P_44,Coffee Maker
+P_45,Blender
+P_46,Air Purifier
+P_47,Robot Vacuum
+P_48,Instant Pot
+P_49,Slow Cooker

@@ -1,52 +1,62 @@
-# Transformer-Based Graph Embedding for Node Clustering
+### Transformer-Based Graph Embedding for Node Clustering
 
-This application generates a NetworkX graph object from relational data which is used to generate embeddings for each record using Node2Vec and Sentence-BERT, followed by clustering and visualization of the results. The application leverages DuckDB for efficient data processing and querying.
-
-## Salesforce Account and Opportunity Graph Analysis Example
+This application generates a NetworkX graph object from relational data, which is used to generate embeddings for each record using Node2Vec and Sentence-BERT. It then clusters the embeddings and visualizes the results. The application includes scripts to load, preprocess, and visualize synthetic e-commerce data.
 
 ### Features
 
-- Load and preprocess Salesforce account and opportunity data.
-- Create a graph of accounts with edges based on shared industry and date criteria.
-- Generate textual embeddings for account features using Sentence-BERT.
-- Combine textual embeddings with numerical features.
-- Generate comprehensive node embeddings using Node2Vec.
-- Cluster the accounts using K-Means clustering. https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans
-- Visualize the clusters using t-SNE. https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE
-
-### Why Use This Application for Salesforce Data?
-
-Analyzing Salesforce account and opportunity data using this methodology provides several key benefits:
-
-- **Enhanced Relationship Insights:** By visualizing the connections between accounts based on shared attributes and opportunities, sales teams can identify clusters of similar accounts, uncover hidden relationships, and better understand customer segments.
-- **Improved Targeting and Strategy:** Clustering accounts using advanced graph and machine learning techniques enables more precise targeting, allowing sales teams to tailor their strategies for different clusters, improving overall sales efficiency and effectiveness.
-- **Data-Driven Decision Making:** The use of graph-based embeddings and clustering provides a robust foundation for data-driven decision making, helping sales managers prioritize high-potential accounts and optimize resource allocation.
+- Load and preprocess e-commerce data (customers, products, purchases, co-purchases).
+- Create a graph with customers and products as nodes.
+- Add edges for purchases, co-purchases, customer similarity, temporal relations, and semantic similarity between products.
+- Generate node embeddings using Node2Vec.
+- Cluster the nodes using K-Means clustering.
+- Visualize the graph and clusters interactively using Plotly.
 
 ### Installation
 
 1. Install the required Python packages:
     ```sh
-    pip install duckdb pandas networkx node2vec gensim matplotlib scikit-learn sentence-transformers
+    pip install matplotlib networkx plotly pandas sentence-transformers numpy node2vec gensim scikit-learn
     ```
 
 ### Usage
 
-1. Place your Salesforce account and opportunity CSV files in the `demo_data` directory, or use the already provided synthetic data. Ensure the file names match the script references. 
+1. Place your synthetic e-commerce data CSV files (`customers.csv`, `products.csv`, `purchases.csv`, `co_purchases.csv`) in the `demo_data` directory.
 
-2. Run the script:
+2. Run the main script to generate and visualize the graph:
     ```sh
     python main.py
     ```
 
 ### Example
 
-The t-SNE visualization below was generated from 100 records of synthetic Salesforce account and opportunity data.
+The interactive visualization displays the graph with nodes representing customers and products, and edges representing various types of relationships. Nodes are colored based on their type (customers in blue, products in green), and clusters are highlighted to reveal patterns and insights.
 
-- Yellow indicates if an account's most recent opportunity was won while purple is lost or not closed.
-- Groupings such as the cluster in the lower left suggest that the accounts might share similar values for other attributes like account_type, industry, country, opportunity_count, total_opportunity_amount, and avg_opportunity_probability.
+### Files and Functions
 
-![Alt text](t-SNE-visualization-example.png)
+#### main.py
 
-Or for a less useful but more fun example of a 3D reduction visualization:
+- Loads the data from CSV files.
+- Creates the graph and adds various types of edges.
+- Generates node embeddings using Node2Vec.
+- Clusters the nodes and visualizes the results.
 
-![Alt text](t-SNE-visualization-example-3d.png)
+#### graph_builder.py
+
+- Defines functions to load the data and create the graph.
+- Adds nodes for customers and products.
+- Adds edges for purchases, co-purchases, customer similarity, temporal relations, and semantic similarity between products.
+
+#### feature_encoder.py
+
+- Extracts and encodes node features for use in Node2Vec.
+
+#### node2vec_model.py
+
+- Generates node embeddings using Node2Vec.
+- Loads the Node2Vec model and retrieves embeddings.
+- Performs clustering on the embeddings.
+
+#### visualization.py
+
+- Visualizes the graph and clusters using Plotly for interactive visualization.
+- Provides 2D and 3D visualization functions.
