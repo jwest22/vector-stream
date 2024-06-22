@@ -20,7 +20,7 @@ This application generates a NetworkX graph object from relational data, which i
 
 ### Usage
 
-1. Place your synthetic e-commerce data CSV files (`customers.csv`, `products.csv`, `purchases.csv`, `co_purchases.csv`) in the `demo_data` directory.
+1. Place your synthetic e-commerce data CSV files (`customers.csv`, `products.csv`, `purchases.csv`, `co_purchases.csv`) in the `demo_data` directory, or use the provided files, or generated your own files using the provided `data_gen.py` script. 
 
 2. Run the main script to generate and visualize the graph:
     ```sh
