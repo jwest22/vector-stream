@@ -12,6 +12,7 @@ This project generates multi-modal vector embeddings for event descriptions, geo
 * Similarity Search: FAISS
 
 ### Project 2: Graph Embeddings and Clustering for Relational Data (graph_analysis)
+
 **Description:**
 This application generates a NetworkX graph object from relational data, which is used to generate embeddings for each record using Node2Vec and Sentence-BERT. It then clusters the embeddings and visualizes the results. The application includes scripts to load, preprocess, and visualize synthetic e-commerce data.
 
@@ -19,3 +20,7 @@ This application generates a NetworkX graph object from relational data, which i
 * Graph Construction: NetworkX
 * Embeddings: Node2Vec, Sentence-BERT
 * Clustering and Visualization: Various clustering algorithms and visualization tools
+
+### Project 3: Graph Convolution Network Analysis (gcn)
+
+WIP
